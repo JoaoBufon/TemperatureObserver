@@ -7,26 +7,43 @@ public class TemperaturaController {
 	private MonitorDeDadosDoClima monitorDeDados = new MonitorDeDadosDoClima(equipamentoDeMonitoramento);
 	private ArrayList<Observador> observadores = new ArrayList<>();
 	private TemperaturaModel model = new TemperaturaModel();
-	
+	private boolean shouldCollectData = false;
+
 	public void init() {
 		this.equipamentoDeMonitoramento.setMonitorDadosClima(monitorDeDados);
 		this.observadores.add(new DisplayDeCondicoesAtuais());
 		this.observadores.add(new DisplayEstatistico());
 	}
-	
-	public void coletar() throws InterruptedException{
-		this.equipamentoDeMonitoramento.coletar();
+
+	public void coletarDescoletar() {
+		if (this.shouldCollectData == true) {
+			this.shouldCollectData = false;
+		} else {
+			this.shouldCollectData = true;
+			this.coletar();
+		}
+		return;
 	}
-	
+
+	private void coletar() {
+		try {
+			while (shouldCollectData) {
+				this.equipamentoDeMonitoramento.coletar();
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void registraObservador(Observador o) {
 		this.monitorDeDados.registraObservador(o);
 	}
-	
+
 	public void removeObservador(Observador o) {
 		this.monitorDeDados.removeObservador(o);
 	}
-	
-	public String getDados(Observador observador,int i) {
+
+	public String getDados(Observador observador, int i) {
 		return model.getDados(observador, i);
 	}
 
@@ -53,5 +70,13 @@ public class TemperaturaController {
 	public void setMonitorDeDados(MonitorDeDadosDoClima monitorDeDados) {
 		this.monitorDeDados = monitorDeDados;
 	}
-	
+
+	public boolean isShouldCollectData() {
+		return shouldCollectData;
+	}
+
+	public void setShouldCollectData(boolean shouldCollectData) {
+		this.shouldCollectData = shouldCollectData;
+	}
+
 }

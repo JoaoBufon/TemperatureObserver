@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class MonitorDeDadosDoClima implements SujeitoObservavel {
 
 	private ArrayList<Observador> observadores;
-	
+
 	private double temperatura;
 	private double humidade;
 	private double pressao;
-	
+
 	private EquipamentoDeMonitoramento equipamento;
 
 	public MonitorDeDadosDoClima(EquipamentoDeMonitoramento equipamento) {
@@ -26,10 +26,8 @@ public class MonitorDeDadosDoClima implements SujeitoObservavel {
 	@Override
 	public void removeObservador(Observador o) {
 		int i = observadores.indexOf(o);
-		
-		if (i > 0) {
-			observadores.remove(i);
-		}
+
+		observadores.remove(i);
 	}
 
 	@Override

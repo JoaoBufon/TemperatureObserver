@@ -20,7 +20,7 @@ public class EquipamentoDeMonitoramento {
 
 			monitorDadosClima.dadosMudaram();
 
-			//Thread.sleep(3000);
+			Thread.sleep(3000);
 		}
 	}
 
